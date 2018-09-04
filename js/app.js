@@ -4,7 +4,11 @@ function addTodo() {
   var inputValue = document.getElementById('task-id').value;
   var task = document.createTextNode(inputValue);
   taskItem.appendChild(task);
-  taskList.appendChild(taskItem);
+  if(inputValue == "") {
+      alert("Введите задачу!");
+   } else {
+      taskList.appendChild(taskItem);
+   }
   document.getElementById('task-id').value = "";
   var doneButton= document.createElement('button');
   doneButton.className = "done button";

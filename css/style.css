@@ -55,6 +55,7 @@ ul li {
   position: relative;
   border-bottom: 1px solid #ffffff;
   box-sizing:border-box;
+  list-style: none;
 }
 .button {
   width:30px;
@@ -63,8 +64,22 @@ ul li {
   color: #3361b8;
   border-radius: 7px;
 }
+.button:hover {
+  background-color: #bbbbbb;
+}
 .add {
   margin-right: 5px;
+}
+.del,
+.delete {
+  background-image:url("../img/box.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.add {
+  background-image:url("../img/add.svg");
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .delete {
   position: absolute;
@@ -75,11 +90,17 @@ ul li {
   position: absolute;
   top: 0;
   right: -70px;
+  background-image:url("../img/edit.svg");
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .done{
   position: absolute;
   top: 0;
   right: -35px;
+  background-image:url("../img/checkbox-on.svg");
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .made-by {
   font-size: 10px;
