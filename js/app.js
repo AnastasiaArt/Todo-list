@@ -3,12 +3,33 @@ function deleteTodo() {
   var taskList = taskItem.parentNode;
 
   taskList.removeChild(taskItem);
-
 }
 function doneTodo(){
   var taskItem = this.parentNode;
   var taskList = taskItem.parentNode;
-  taskList.classList.add('checked');
+
+  taskList.classList.toggle('checked');
+}
+function editTodo(){
+  var modal = document.getElementById('modal-id');
+  var taskItem = this.parentNode;
+  var saveButton = document.getElementById('save-id');
+  var inputValue = taskItem.querySelector('b');
+  var inputEdit = document.getElementById('task-edit-id');
+
+  modal.classList.add('modal-show');
+  modal.classList.remove("modal-error");
+  inputEdit.value=inputValue.innerText;
+  saveButton.addEventListener('click', function () {
+    if(inputEdit.value == "") {
+      modal.classList.remove("modal-error");
+      modal.offsetWidth = modal.offsetWidth;
+      modal.classList.add("modal-error");
+     } else {
+        inputValue.innerText=inputEdit.value;
+        modal.classList.remove('modal-show');
+     }
+  });
 }
 function delInput() {
   var inputValue = document.getElementById('task-id');
@@ -42,6 +63,7 @@ function addTodo() {
 
   deleteButton.addEventListener('click',deleteTodo);
   doneButton.addEventListener('click',doneTodo);
+  editButton.addEventListener('click',editTodo);
 
   inputValue.focus();
 }
