@@ -1,28 +1,29 @@
 var taskList = document.querySelector('ol');
-var task;
-function save(){
-  task = taskList.innerHTML;
-  localStorage.setItem('task',task);
-  // for (var i = 0; i < taskList.children.length; i++) {
-  //     task.push(taskList.children[i].getElementsByTagName('b')[0].innerText);
-  // }
-  // localStorage.removeItem('task');
-  // localStorage.setItem('task', JSON.stringify({taskList: task}));
-}
-
-if (localStorage.getItem('task')) {
-  taskList.innerHTML = localStorage.getItem('task');
-  //   taskList=JSON.parse(localStorage.getItem('task'));
-}
 
 taskList.addEventListener('click', function (ev) {
   var target = ev.target;
     if(target.classList.contains("done")) {
        target.parentNode.classList.toggle('checked');
-      console.log(target);
       save();
      }
 });
+
+function save(){
+  var task=[];
+  for (var i = 0; i < taskList.children.length; i++) {
+    task.push(taskList.children[i].getElementsByTagName('b')[0].innerText);
+  }
+  localStorage.setItem('task', JSON.stringify({taskList: task}));
+}
+
+var taskLocal=JSON.parse(localStorage.getItem('task'));
+console.log(taskList);
+for(var i=0; i<taskLocal.taskList.length;i++){
+
+  var taskItem=addTodo(taskLocal.taskList[i]);
+
+  console.log(taskItem);
+}
 function deleteTodo() {
   var taskItem = this.parentNode;
   var taskList = taskItem.parentNode;
@@ -59,7 +60,7 @@ function delInput() {
   document.getElementById('task-id').value = "";
   inputValue.focus();
 }
-function addTodo() {
+function addTodo(text) {
   var taskList = document.querySelector('ol');
   var taskItem = document.createElement('li');
   var inputValue = document.getElementById('task-id');
@@ -68,12 +69,12 @@ function addTodo() {
   task.innerText = inputValue.value;
   taskItem.appendChild(task);
 
-  if(inputValue.value == "") {
-    alert("Введите задачу!");
-    inputValue.focus();
-   } else {
+  // if(inputValue.value == "") {
+  //   alert("Введите задачу!");
+  //   inputValue.focus();
+  //  } else {
       taskList.appendChild(taskItem);
-   }
+   // }
   document.getElementById('task-id').value = "";
   var doneButton = document.createElement('button');
   doneButton.className = "done button";
@@ -89,4 +90,5 @@ function addTodo() {
   editButton.addEventListener('click',editTodo);
   inputValue.focus();
   save();
+  // return taskItem;
 }
