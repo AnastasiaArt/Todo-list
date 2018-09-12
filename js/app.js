@@ -1,5 +1,6 @@
 var taskList = document.querySelector('ol');
 var inputValue = document.getElementById('task-id');
+
 taskList.addEventListener('click', function (ev) {
   var target = ev.target;
     if(target.classList.contains("done")) {
@@ -15,24 +16,21 @@ function save(){
   }
   localStorage.setItem('task', JSON.stringify({taskList: task}));
 }
-
 var taskLocal=JSON.parse(localStorage.getItem('task'));
-console.log(taskList);
-  console.log(taskLocal.taskList.length);
+console.log(taskLocal);
+if (taskLocal) {
 for(var i=0; i<taskLocal.taskList.length;i++){
-
   var taskItem=addTodoList(taskLocal.taskList[i]);
   taskList.appendChild(taskItem);
-
+}
 }
 function deleteTodo() {
   var taskItem = this.parentNode;
   var taskList = taskItem.parentNode;
-
   taskList.removeChild(taskItem);
   save();
 }
-function editTodo(){
+function editTodo() {
   var modal = document.getElementById('modal-id');
   var taskItem = this.parentNode;
   var saveButton = document.getElementById('save-id');
@@ -42,41 +40,33 @@ function editTodo(){
   modal.classList.add('modal-show');
   modal.classList.remove("modal-error");
   inputEdit.value = inputValue.innerText;
+  inputEdit.focus();
   saveButton.addEventListener('click', function () {
     if(inputEdit.value == "") {
       modal.classList.remove("modal-error");
       modal.offsetWidth = modal.offsetWidth;
       modal.classList.add("modal-error");
      } else {
-        inputValue.innerText = inputEdit.value;
-        modal.classList.remove('modal-show');
-        save();
+      inputValue.innerText = inputEdit.value;
+      modal.classList.remove('modal-show');
+      save();
      }
   });
-
 }
 function delInput() {
   var inputValue = document.getElementById('task-id');
-
   document.getElementById('task-id').value = "";
   inputValue.focus();
 }
 function addTodoList(taskText) {
   var taskList = document.querySelector('ol');
   var taskItem = document.createElement('li');
-
   var task = document.createElement('b');
 
   task.innerText = taskText;
-
   taskItem.appendChild(task);
+  taskList.appendChild(taskItem);
 
-  // if(inputValue.value == "") {
-  //   alert("Введите задачу!");
-  //   inputValue.focus();
-  //  } else {
-      taskList.appendChild(taskItem);
-   // }
   document.getElementById('task-id').value = "";
   var doneButton = document.createElement('button');
   doneButton.className = "done button";
@@ -94,16 +84,14 @@ function addTodoList(taskText) {
   save();
   return taskItem;
 }
-function addTodo(){
-  var inputValue = taskItem.querySelector('b');
-
-}
 function addTodo() {
-    if (inputValue.value) {
-        var listItem = addTodoList(inputValue.value);
-        taskList.appendChild(listItem);
-
-        inputValue.value = "";
-    }
-    save();
+  if (inputValue.value) {
+    var listItem = addTodoList(inputValue.value);
+    taskList.appendChild(listItem);
+    inputValue.value = "";
+  } else {
+    alert("Введите задачу!");
+    inputValue.focus();
+  }
+  save();
 }

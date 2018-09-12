@@ -11,6 +11,14 @@ body {
   background-color: #ffffff;
   width: 100%;
 }
+input {
+  width: 80%;
+  padding: 5px 10px;
+  vertical-align: top;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 7px;
+  margin-right: 5px;
+}
 .body-container {
   margin:0 auto;
   padding: 0;
@@ -25,7 +33,6 @@ body {
   background-color: #3361b8;
   box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
   border-radius: 18px;
-
 }
 .new-task {
   padding: 0;
@@ -36,16 +43,6 @@ body {
   display: flex;
   justify-content: center;
 }
-
-input {
-  width: 80%;
-  padding: 5px 10px;
-  vertical-align: top;
-  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.1);
-  border-radius: 7px;
-  margin-right: 5px;
-}
-
 .task-list li {
   color:#ffffff;
   padding: 5px 10px;
@@ -109,7 +106,6 @@ ol li.checked {
   opacity: 0.5;
   text-decoration: line-through;
 }
-
 .button {
   width:30px;
   height: 30px;
@@ -117,6 +113,8 @@ ol li.checked {
   color: #3361b8;
   font-weight: 700;
   border-radius: 7px;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .button:hover {
   background-color: #bbbbbb;
@@ -127,13 +125,9 @@ ol li.checked {
 .del,
 .delete {
   background-image:url("../img/box.svg");
-  background-position: center;
-  background-repeat: no-repeat;
 }
 .add {
   background-image:url("../img/add.svg");
-  background-position: center;
-  background-repeat: no-repeat;
 }
 .delete {
   position: absolute;
@@ -145,16 +139,12 @@ ol li.checked {
   top: 0;
   right: 35px;
   background-image:url("../img/edit.svg");
-  background-position: center;
-  background-repeat: no-repeat;
 }
 .done{
   position: absolute;
   top: 0;
   right: 70px;
   background-image:url("../img/checkbox-on.svg");
-  background-position: center;
-  background-repeat: no-repeat;
 }
 .made-by {
   font-size: 10px;
