@@ -1,5 +1,5 @@
 var taskList = document.querySelector('ol');
-
+var inputValue = document.getElementById('task-id');
 taskList.addEventListener('click', function (ev) {
   var target = ev.target;
     if(target.classList.contains("done")) {
@@ -18,11 +18,12 @@ function save(){
 
 var taskLocal=JSON.parse(localStorage.getItem('task'));
 console.log(taskList);
+  console.log(taskLocal.taskList.length);
 for(var i=0; i<taskLocal.taskList.length;i++){
 
-  var taskItem=addTodo(taskLocal.taskList[i]);
+  var taskItem=addTodoList(taskLocal.taskList[i]);
+  taskList.appendChild(taskItem);
 
-  console.log(taskItem);
 }
 function deleteTodo() {
   var taskItem = this.parentNode;
@@ -60,13 +61,14 @@ function delInput() {
   document.getElementById('task-id').value = "";
   inputValue.focus();
 }
-function addTodo(text) {
+function addTodoList(taskText) {
   var taskList = document.querySelector('ol');
   var taskItem = document.createElement('li');
-  var inputValue = document.getElementById('task-id');
+
   var task = document.createElement('b');
 
-  task.innerText = inputValue.value;
+  task.innerText = taskText;
+
   taskItem.appendChild(task);
 
   // if(inputValue.value == "") {
@@ -90,5 +92,18 @@ function addTodo(text) {
   editButton.addEventListener('click',editTodo);
   inputValue.focus();
   save();
-  // return taskItem;
+  return taskItem;
+}
+function addTodo(){
+  var inputValue = taskItem.querySelector('b');
+
+}
+function addTodo() {
+    if (inputValue.value) {
+        var listItem = addTodoList(inputValue.value);
+        taskList.appendChild(listItem);
+
+        inputValue.value = "";
+    }
+    save();
 }
