@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "PT Sans", Arial, sans-serif;
+  font-family:  Arial, sans-serif;
   font-size: 14px;
   line-height: 21px;
   font-weight: 400;
@@ -149,4 +149,7 @@ ol li.checked {
 .made-by {
   font-size: 10px;
   line-height: 12px;
+}
+.green {
+  background-color: #000000;
 }

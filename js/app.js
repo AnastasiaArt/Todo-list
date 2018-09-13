@@ -14,27 +14,9 @@ taskList.addEventListener('click', function (ev) {
       var li = ev.target.parentNode;
       li.remove();
       save();
-    }
-    if(target.classList.contains("edit")) {
-      var b=target.parentNode.querySelector('b');
-      var taskIt = target.parentNode;
-      modal.classList.add('modal-show');
-      modal.classList.remove("modal-error");
-      inputEdit.value = b.innerText;
-      saveButton.addEventListener('click',function (ev) {
-         if(inputEdit.value == "") {
-           modal.classList.remove("modal-error");
-           modal.offsetWidth = modal.offsetWidth;
-           modal.classList.add("modal-error");
-         } else {
-          b.innerText = inputEdit.value;
-          console.log(inputEdit.value);
-           modal.classList.remove('modal-show');
-        }
-        save();
-       document.getElementById('task-edit-id').value="";
-      });
-      save();
+     }
+    if (target.classList.contains("edit")) {
+       target.onclick = editTodo;
     }
 },false);
 
@@ -44,34 +26,23 @@ inputValue.addEventListener("keydown", function (ev) {
     addTodo();
   }
 });
+
 function save(){
-  var task=[];
+  var task = [];
   for (var i = 0; i < taskList.children.length; i++) {
     task.push(taskList.children[i].getElementsByTagName('b')[0].innerText);
   }
   localStorage.setItem('task', JSON.stringify({taskList: task}));
 }
-var taskLocal=JSON.parse(localStorage.getItem('task'));
+var taskLocal = JSON.parse(localStorage.getItem('task'));
 console.log(taskLocal);
 if (taskLocal) {
-for(var i=0; i<taskLocal.taskList.length;i++){
-  var taskItem=addTodoList(taskLocal.taskList[i]);
+for(var i = 0; i<taskLocal.taskList.length;i++){
+  var taskItem = addTodoList(taskLocal.taskList[i]);
   taskList.appendChild(taskItem);
 }
 }
-function editTodo(b) {
-    if(inputEdit.value == "") {
-      modal.classList.remove("modal-error");
-      modal.offsetWidth = modal.offsetWidth;
-      modal.classList.add("modal-error");
-     } else {
-      b.innerText = inputEdit.value;
-      console.log(inputEdit.value);
-      modal.classList.remove('modal-show');
 
-     }
-     document.getElementById('task-edit-id').value="";
-  }
 function delInput() {
   var inputValue = document.getElementById('task-id');
   document.getElementById('task-id').value = "";
@@ -112,4 +83,25 @@ function addTodo() {
     inputValue.focus();
   }
   save();
+}
+function editTodo() {
+  var editButton = this;
+  var taskItem = this.parentNode;
+  var input = modal.querySelector('input');
+  var text = taskItem.querySelector('b');
+
+  modal.classList.add('modal-show');
+  input.value = text.innerText;
+  saveButton.onclick=function() {
+    if (input.value) {
+      text.innerText = input.value;
+      save();
+      modal.classList.remove('modal-show');
+      document.getElementById('task-edit-id').value = "";
+    } else {
+      modal.classList.remove("modal-error");
+      modal.offsetWidth = modal.offsetWidth;
+      modal.classList.add("modal-error");
+   }
+  }
 }
