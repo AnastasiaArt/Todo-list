@@ -1,16 +1,49 @@
 var taskList = document.querySelector('ol');
 var inputValue = document.getElementById('task-id');
+var modal = document.getElementById('modal-id');
+var inputEdit = document.getElementById('task-edit-id');
+var saveButton = document.getElementById('save-id');
 
 taskList.addEventListener('click', function (ev) {
   var target = ev.target;
+  ev.preventDefault;
     if(target.classList.contains("done")) {
        target.parentNode.classList.toggle('checked');
       save();
     }else if(target.classList.contains("delete")) {
       var li = ev.target.parentNode;
       li.remove();
+      save();
+    }
+    if(target.classList.contains("edit")) {
+      var b=target.parentNode.querySelector('b');
+      var taskIt = target.parentNode;
+      modal.classList.add('modal-show');
+      modal.classList.remove("modal-error");
+      inputEdit.value = b.innerText;
+      saveButton.addEventListener('click',function (ev) {
+         if(inputEdit.value == "") {
+           modal.classList.remove("modal-error");
+           modal.offsetWidth = modal.offsetWidth;
+           modal.classList.add("modal-error");
+         } else {
+          b.innerText = inputEdit.value;
+          console.log(inputEdit.value);
+           modal.classList.remove('modal-show');
+        }
+        save();
+       document.getElementById('task-edit-id').value="";
+      });
+      save();
     }
 },false);
+
+inputValue.addEventListener("keydown", function (ev) {
+  if (ev.keyCode === 13) {
+    ev.preventDefault();
+    addTodo();
+  }
+});
 function save(){
   var task=[];
   for (var i = 0; i < taskList.children.length; i++) {
@@ -26,35 +59,19 @@ for(var i=0; i<taskLocal.taskList.length;i++){
   taskList.appendChild(taskItem);
 }
 }
-function deleteTodo() {
-  var taskItem = this.parentNode;
-  var taskList = taskItem.parentNode;
-  taskList.removeChild(taskItem);
-  save();
-}
-function editTodo() {
-  var modal = document.getElementById('modal-id');
-  var taskItem = this.parentNode;
-  var saveButton = document.getElementById('save-id');
-  var inputValue = taskItem.querySelector('b');
-  var inputEdit = document.getElementById('task-edit-id');
-
-  modal.classList.add('modal-show');
-  modal.classList.remove("modal-error");
-  inputEdit.value = inputValue.innerText;
-  inputEdit.focus();
-  saveButton.addEventListener('click', function () {
+function editTodo(b) {
     if(inputEdit.value == "") {
       modal.classList.remove("modal-error");
       modal.offsetWidth = modal.offsetWidth;
       modal.classList.add("modal-error");
      } else {
-      inputValue.innerText = inputEdit.value;
+      b.innerText = inputEdit.value;
+      console.log(inputEdit.value);
       modal.classList.remove('modal-show');
-      save();
+
      }
-  });
-}
+     document.getElementById('task-edit-id').value="";
+  }
 function delInput() {
   var inputValue = document.getElementById('task-id');
   document.getElementById('task-id').value = "";
@@ -80,8 +97,6 @@ function addTodoList(taskText) {
   taskItem.appendChild(doneButton);
   taskItem.appendChild(editButton);
   taskItem.appendChild(deleteButton);
-  deleteButton.addEventListener('click',deleteTodo);
-  editButton.addEventListener('click',editTodo);
 
   inputValue.focus();
   save();
