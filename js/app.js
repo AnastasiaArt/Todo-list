@@ -6,9 +6,11 @@ taskList.addEventListener('click', function (ev) {
     if(target.classList.contains("done")) {
        target.parentNode.classList.toggle('checked');
       save();
-     }
-});
-
+    }else if(target.classList.contains("delete")) {
+      var li = ev.target.parentNode;
+      li.remove();
+    }
+},false);
 function save(){
   var task=[];
   for (var i = 0; i < taskList.children.length; i++) {
@@ -80,6 +82,7 @@ function addTodoList(taskText) {
   taskItem.appendChild(deleteButton);
   deleteButton.addEventListener('click',deleteTodo);
   editButton.addEventListener('click',editTodo);
+
   inputValue.focus();
   save();
   return taskItem;
