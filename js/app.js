@@ -8,9 +8,13 @@ taskList.addEventListener('click', function (ev) {
   var target = ev.target;
   ev.preventDefault;
     if(target.classList.contains("done")) {
-       target.parentNode.classList.toggle('checked');
+      if (target.parentNode.classList.contains("checked")) {
+        target.parentNode.classList.remove("checked");
+      } else {
+        target.parentNode.classList.add("checked");
+      }
       save();
-    }else if(target.classList.contains("delete")) {
+    } else if(target.classList.contains("delete")) {
       var li = ev.target.parentNode;
       li.remove();
       save();
@@ -26,23 +30,36 @@ inputValue.addEventListener("keydown", function (ev) {
     addTodo();
   }
 });
-
 function save(){
   var task = [];
+  var check =[];
   for (var i = 0; i < taskList.children.length; i++) {
     task.push(taskList.children[i].getElementsByTagName('b')[0].innerText);
-  }
+    }
+  for (var i = 0; i < taskList.children.length; i++) {
+    check.push(taskList.children[i].className);
+    }
+  localStorage.setItem('class', JSON.stringify({taskList: check}));
   localStorage.setItem('task', JSON.stringify({taskList: task}));
 }
+var checkLocal = JSON.parse(localStorage.getItem('class'));
 var taskLocal = JSON.parse(localStorage.getItem('task'));
-console.log(taskLocal);
-if (taskLocal) {
-for(var i = 0; i<taskLocal.taskList.length;i++){
-  var taskItem = addTodoList(taskLocal.taskList[i]);
-  taskList.appendChild(taskItem);
-}
-}
 
+if (taskLocal) {
+  for(var i = 0; i<taskLocal.taskList.length;i++){
+    var taskItem = addTodoList(taskLocal.taskList[i]);
+    taskList.appendChild(taskItem);
+    console.log(taskItem);
+}
+//
+// if (checkLocal) {
+//   for(var i = 0; i<checkLocal.taskList.length;i++){
+//       //checkLocal.taskList[i].className;
+//         console.log(checkLocal.taskList[i].className);
+//     }
+//
+// }
+}
 function delInput() {
   var inputValue = document.getElementById('task-id');
   document.getElementById('task-id').value = "";
